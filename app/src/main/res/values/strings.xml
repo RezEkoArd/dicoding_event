@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">DicodingEvent</string>
     <string name="item_name">DicodingEvent</string>
+    <string name="detail_title">Event Detail</string>
+    <string name="tvOwnerName">Dicoding Event</string>
+    <string name="beginTime">2024-08-30 16:00:00</string>
+    <string name="quota">2000</string>
+    <string name="registrant">218</string>
+    <string name="strip">-</string>
+    <string name="description">Dicoding Developer Coaching kali ini akan membahas materi dan pertanyaan seputar Flutter dengan tema "Navigasi Masa Depan dengan GoRouter."
+Sesi ini membahas tentang Flutter GoRouter Navigation, dimulai dengan flashback Navigator 2.0, untuk mengulas kembali Navigator 2.0. Selanjutnya, kita akan mengenal GoRouter dengan memahami peran dan fungsinya dalam navigasi modern. Kemudian, kita akan menilik keunggulan GoRouter dan mengungkap fitur-fitur istimewa yang membuatnya unggul. Terakhir, kita akan berpetualang dengan GoRouter melalui panduan praktis dan contoh menarik untuk implementasinya dalam proyek Flutter Anda. Bersiaplah untuk memperkaya pengetahuan dan keterampilan navigasi Anda!</string>
 </resources>

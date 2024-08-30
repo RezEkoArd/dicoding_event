@@ -12,6 +12,13 @@ class AdapterEventList : RecyclerView.Adapter<AdapterEventList.ViewHolder>() {
 
     private val listEvent = ArrayList<ListEventsItem>()
 
+    // Click Listener
+    private var onItemClickCallBack: OnItemClickCallback? = null
+
+    fun setOnItemClick (onItemClickCallback: OnItemClickCallback){
+        this.onItemClickCallBack = onItemClickCallback
+    }
+
     fun getEvent(event: List<ListEventsItem>){
         listEvent.clear()
         listEvent.addAll(event)
@@ -21,6 +28,7 @@ class AdapterEventList : RecyclerView.Adapter<AdapterEventList.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root){
         internal fun bind(event: ListEventsItem){
+            binding.root.setOnClickListener { onItemClickCallBack?.onItemClicked(event)}
             binding.tvItemName.text = event.name
             Glide.with(itemView.context)
                 .load(event.imageLogo)
@@ -41,5 +49,8 @@ class AdapterEventList : RecyclerView.Adapter<AdapterEventList.ViewHolder>() {
         holder.bind(event)
     }
 
+    interface OnItemClickCallback{
+        fun onItemClicked(data: ListEventsItem)
+    }
 
 }

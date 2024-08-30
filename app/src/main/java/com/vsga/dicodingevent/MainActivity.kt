@@ -1,5 +1,6 @@
 package com.vsga.dicodingevent
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +8,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.vsga.dicodingevent.data.response.ListEventsItem
 import com.vsga.dicodingevent.databinding.ActivityMainBinding
 import com.vsga.dicodingevent.ui.AdapterEventList
+import com.vsga.dicodingevent.ui.DetailActivity
 import com.vsga.dicodingevent.ui.UpcomingViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -30,12 +33,22 @@ class MainActivity : AppCompatActivity() {
             rvEvent.adapter = adapter
         }
 
+        adapter.setOnItemClick(object : AdapterEventList.OnItemClickCallback{
+            override fun onItemClicked(data: ListEventsItem) {
+                Intent(this@MainActivity, DetailActivity::class.java).also{
+                    it.putExtra(DetailActivity.EXTRA_ID, data.id)
+                    startActivity(it)
+                }
+            }
+        })
+
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[UpcomingViewModel::class.java]
         viewModel.getUpcomingEvent()
 
         viewModel.listEvent.observe(this) { data ->
 //            binding.event.text = it.toString()
             adapter.getEvent(data)
+
         }
 
         enableEdgeToEdge()
