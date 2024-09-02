@@ -23,16 +23,17 @@ class DetailActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var viewModel: UpcomingViewModel
+    private lateinit var viewModel: DetailViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         val id = intent.getIntExtra(EXTRA_ID, 0)
-        viewModel = ViewModelProvider(this)[UpcomingViewModel::class.java]
+        viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         //get Function detail response
         id.let {
             viewModel.getDetailEvent(it.toString())
@@ -44,7 +45,7 @@ class DetailActivity : AppCompatActivity() {
                 it.event?.let { detail ->
                     binding.tvDetailTitle.text = detail.name
                     binding.tvOwnerName.text = detail.ownerName
-                    binding.beginTime.text = convertDate(detail.beginTime ?: "-")
+                    binding.tvbeginTime.text = convertDate(detail.beginTime ?: "-")
                     binding.quota.text = detail.quota.toString()
                     binding.registrant.text = detail.registrants.toString()
 

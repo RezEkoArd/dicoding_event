@@ -1,24 +1,22 @@
 package com.vsga.dicodingevent
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.vsga.dicodingevent.data.response.ListEventsItem
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vsga.dicodingevent.databinding.ActivityMainBinding
-import com.vsga.dicodingevent.ui.AdapterEventList
-import com.vsga.dicodingevent.ui.DetailActivity
-import com.vsga.dicodingevent.ui.UpcomingViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: UpcomingViewModel
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: AdapterEventList
+//    private lateinit var viewModel: UpcomingViewModel
+//    private lateinit var adapter: AdapterEventList
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,30 +24,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = AdapterEventList()
-        binding.apply{
-            rvEvent.layoutManager = LinearLayoutManager(this@MainActivity)
-            rvEvent.setHasFixedSize(true)
-            rvEvent.adapter = adapter
-        }
+        supportActionBar?.hide()
 
-        adapter.setOnItemClick(object : AdapterEventList.OnItemClickCallback{
-            override fun onItemClicked(data: ListEventsItem) {
-                Intent(this@MainActivity, DetailActivity::class.java).also{
-                    it.putExtra(DetailActivity.EXTRA_ID, data.id)
-                    startActivity(it)
-                }
-            }
-        })
+        val navView: BottomNavigationView = binding.navView
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[UpcomingViewModel::class.java]
-        viewModel.getUpcomingEvent()
-
-        viewModel.listEvent.observe(this) { data ->
-//            binding.event.text = it.toString()
-            adapter.getEvent(data)
-
-        }
+        val navController = findNavController(R.id.nav_host_fragment_activity_home)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home, R.id.navigation_upcoming, R.id.navigation_finished
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -57,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-
     }
+
+
 }
