@@ -15,9 +15,9 @@ class HomeViewModel : ViewModel() {
     private val _allEvent = MutableLiveData<List<ListEventsItem>>()
     val allEvent : LiveData<List<ListEventsItem>> = _allEvent
 
-    fun getAllEvent(){
+    fun getAllEvent(query: String? = null){
         viewModelScope.launch(Dispatchers.IO){
-            val client = ApiConfig.getApiService().getEvents("-1")
+            val client = ApiConfig.getApiService().getEvents("-1", query)
             if(client.isSuccessful){
                 _allEvent.postValue(client.body()?.listEvents ?: emptyList())
             }

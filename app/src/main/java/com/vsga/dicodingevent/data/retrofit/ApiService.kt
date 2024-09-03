@@ -10,7 +10,8 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("/events")
     suspend fun getEvents(
-        @Query("active")query: String
+        @Query("active")active: String,
+        @Query("q") query: String? = null
     ): Response<ResponseEvent>
 
     @GET("/events/{id}")

@@ -13,4 +13,6 @@ Sesi ini membahas tentang Flutter GoRouter Navigation, dimulai dengan flashback 
     <string name="title_home">Home</string>
     <string name="title_finished">Finished</string>
     <string name="title_upcoming">Upcoming</string>
+    <string name="searchbar_hint">Masukkan kata</string>
+
 </resources>

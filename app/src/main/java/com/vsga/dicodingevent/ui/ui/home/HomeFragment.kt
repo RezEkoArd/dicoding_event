@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,7 +39,6 @@ class HomeFragment : Fragment() {
 
         viewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
-        viewModel.getAllEvent()
 
         adapter = AdapterEventList()
         binding.apply {
@@ -46,6 +46,31 @@ class HomeFragment : Fragment() {
             rvEvent.setHasFixedSize(true)
             rvEvent.adapter = adapter
         }
+
+        viewModel.allEvent.observe(viewLifecycleOwner) {
+            adapter.getEvent(it)
+        }
+
+        with(binding) {
+            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let{
+                        viewModel.getAllEvent(it)
+                    }
+                    searchView.clearFocus()
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            })
+
+            viewModel.getAllEvent()
+
+        }
+
+
 
         adapter.setOnItemClick(object: AdapterEventList.OnItemClickCallback {
             override fun onItemClicked(data: ListEventsItem) {
@@ -57,9 +82,7 @@ class HomeFragment : Fragment() {
         })
 
 
-        viewModel.allEvent.observe(viewLifecycleOwner) {
-            adapter.getEvent(it)
-        }
+
 
     }
 

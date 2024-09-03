@@ -16,7 +16,7 @@ class UpcomingViewModel : ViewModel() {
 
     fun getUpcomingEvent() {
         viewModelScope.launch {
-            val client = ApiConfig.getApiService().getEvents("1")
+            val client = ApiConfig.getApiService().getEvents("1", "")
             if(client.isSuccessful){
                 _upcomingEvent.postValue(client.body()?.listEvents ?: emptyList())
             }

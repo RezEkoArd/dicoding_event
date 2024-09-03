@@ -17,7 +17,7 @@ class FinishedViewModel : ViewModel() {
 
     fun getFinishedEvent(){
         viewModelScope.launch(Dispatchers.IO){
-            val client = ApiConfig.getApiService().getEvents("0")
+            val client = ApiConfig.getApiService().getEvents("0", "")
             if(client.isSuccessful){
                 _finishedEvent.postValue(client.body()?.listEvents ?: emptyList())
             }
